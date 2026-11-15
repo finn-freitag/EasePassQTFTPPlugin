@@ -12,7 +12,6 @@ pub mod ssh;
 use net::Network;
 use serde::{Deserialize, Serialize};
 
-pub const PROVIDER_NAME: &str = "FTP, FTPS or SFTP server";
 pub const DATABASE_ID: &str = "database";
 /// Ease Pass can move about 2.5 MiB of database through a plugin in one call (every byte
 /// crosses the plugin boundary twice); 2 MiB is the limit this plugin promises.
