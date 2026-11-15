@@ -1,0 +1,12 @@
+{
+  "id": "com.finnfreitag.easepass.ftp-database",
+  "name": "FTP/FTPS/SFTP Remote Database",
+  "version": "1.0.0",
+  "api_version": 1,
+  "description": "Opens and saves an Ease Pass database on your own FTP, FTPS or SFTP server. The server only ever receives the encrypted database.",
+  "author": "Finn Freitag",
+  "homepage": "https://github.com/finn-freitag/EasePassQTDatabaseSourcePlugin",
+  "license": "MIT",
+  "network_hosts": ["*:*"],
+  "permissions": ["storage", "network"]
+}

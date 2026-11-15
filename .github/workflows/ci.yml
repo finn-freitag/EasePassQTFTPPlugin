@@ -1,0 +1,45 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Rust with the Wasm target
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+
+      - name: Install wasm-tools
+        uses: taiki-e/install-action@v2
+        with:
+          tool: wasm-tools
+
+      - name: Install the test servers (FTP, FTPS, SFTP)
+        run: |
+          python3 -m pip install --user pyftpdlib pyopenssl asyncssh
+          sudo apt-get update && sudo apt-get install -y openssh-server
+
+      - name: Test, build, check and package the plugin
+        run: PATH="$PATH:/usr/sbin" tools/build.sh
+        env:
+          EASEPASS_REQUIRE_SERVERS: "1"
+
+      - name: Upload the package
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin
+          path: |
+            dist/*.epplugin
+            dist/SHA256SUMS
+          if-no-files-found: error
